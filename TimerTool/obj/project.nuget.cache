@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "isnatkPlvJrS/Hnm0zT8rcbprDV9ehEu28vqR+0iETLmHBsWROrNaeSgScow7OyFCX5tir7P6EyxNzZghlK64w==",
+  "success": true,
+  "projectFilePath": "G:\\wpfDemo\\TimerDemo\\TimerTool\\TimerTool.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\liangzh\\.nuget\\packages\\handycontrol\\3.4.0\\handycontrol.3.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

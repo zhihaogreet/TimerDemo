@@ -1,0 +1,161 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:TimerTool">
+
+
+    <Style x:Key="CustomWindowDefault" TargetType="{x:Type local:CustomWindow}">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="ShowInTaskbar" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="SizeToContent" Value="Manual" />
+        <!--<Setter Property="UseLayoutRounding" Value="True" />-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:CustomWindow}">
+                    <Border
+                        x:Name="grids"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="#E4EDF3"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{Binding WinCornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:CustomWindow}}}">
+                        <Viewbox Name="mviewbox">
+                            <Grid Width="{TemplateBinding dWidth}" Height="{TemplateBinding dHeight}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition x:Name="row1" Height="Auto" />
+                                    <RowDefinition x:Name="row2" Height="auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions> 
+                                <DockPanel
+                                    Name="toptitle"
+                                    Height="128"
+                                    Margin="40,0"
+                                    VerticalAlignment="Center"
+                                    LastChildFill="False">
+                                    <DockPanel.Background>
+                                        <SolidColorBrush Opacity="0.001" Color="Black" />
+                                    </DockPanel.Background>
+                                    <TextBlock
+                                        Name="Title"
+                                        VerticalAlignment="Center"
+                                        FontSize="48"
+                                        Foreground="#636870"
+                                        Text="{TemplateBinding Title}" />
+                                    <Button
+                                        Width="80"
+                                        Height="70"
+                                        hc:IconElement.Geometry="{DynamicResource CloseGeometry}"
+                                        hc:IconElement.Height="40"
+                                        hc:IconElement.Width="40"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{x:Static SystemCommands.CloseWindowCommand}"
+                                        DockPanel.Dock="Right"
+                                        Foreground="Black"
+                                        Style="{DynamicResource ButtonBaseStyle}" />
+                                    <Button
+                                        x:Name="WindowMax"
+                                        Width="80"
+                                        Height="70"
+                                        hc:IconElement.Geometry="{DynamicResource FullScreen}"
+                                        hc:IconElement.Height="40"
+                                        hc:IconElement.Width="40"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                                        CommandParameter="{Binding ElementName=contents}"
+                                        DockPanel.Dock="Right"
+                                        Foreground="Black"
+                                        Style="{DynamicResource ButtonBaseStyle}"
+                                        Visibility="Collapsed" />
+                                    <Button
+                                        x:Name="WindowMin"
+                                        Width="80"
+                                        Height="70"
+                                        hc:IconElement.Geometry="{DynamicResource ReduceForm}"
+                                        hc:IconElement.Height="40"
+                                        hc:IconElement.Width="40"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                                        CommandParameter="{Binding ElementName=contents}"
+                                        DockPanel.Dock="Right"
+                                        Foreground="Black"
+                                        Style="{DynamicResource ButtonBaseStyle}"
+                                        Visibility="Collapsed" />
+                                </DockPanel> 
+                                <Rectangle
+                                    x:Name="topline"
+                                    Grid.Row="1"
+                                    Height="2"
+                                    Fill="#c5c7cb" /> 
+                                <Grid
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                    <ContentPresenter x:Name="contents" />
+                                </Grid> 
+                            </Grid>
+                        </Viewbox>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="isFollowBigger" Value="True" />
+                                <Condition Property="WindowState" Value="Maximized" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="toptitle" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="topline" Property="Visibility" Value="Hidden" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="isFollowBigger" Value="False" />
+                                <Condition Property="WindowState" Value="Maximized" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="dWidth" Value="3840" />
+                                <Setter Property="dHeight" Value="2160" />
+                                <Setter TargetName="toptitle" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="topline" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="grids" Property="BorderThickness" Value="0" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="WinMinStauts" Value="MinHide" />
+                                <Condition Property="IsMinStauts" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="toptitle" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="topline" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="grids" Property="BorderThickness" Value="0" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="IsShowTitleBar" Value="False">
+                            <Setter TargetName="toptitle" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="topline" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsShowTitleLine" Value="False">
+                            <Setter TargetName="topline" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsShowMaxButton" Value="True">
+                            <Setter TargetName="WindowMax" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsShowMinButton" Value="True">
+                            <Setter TargetName="WindowMin" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers />
+    </Style>
+    <Style BasedOn="{StaticResource CustomWindowDefault}" TargetType="{x:Type local:CustomWindow}" />
+</ResourceDictionary>
